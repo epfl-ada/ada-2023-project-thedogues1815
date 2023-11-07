@@ -19,3 +19,19 @@ def import_json_to_df(file_path, sub_sample=False):
         return df.head(50)
     
     return df
+
+def import_csv_to_df(file_path, sub_sample=False):
+    """
+    Imports a CSV file into a pandas DataFrame.
+
+    Parameters:
+    - file_path (str): The path to the CSV file.
+    - sub_sample (bool): If True, imports only the first fifty lines of the CSV file.
+
+    Returns:
+    - DataFrame: A pandas DataFrame containing the imported data.
+    """
+    # Read the CSV file. If sub_sample is True, read only the first 50 rows
+    df = pd.read_csv(file_path, nrows=50 if sub_sample else None)
+    
+    return df
