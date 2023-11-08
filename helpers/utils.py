@@ -1,5 +1,6 @@
 import pandas as pd
 import json
+import numpy as np
 
 def import_json_to_df(json_file_path, exclude_fields = None, sub_sample=None):
     data = []  # List to store the processed records
@@ -44,3 +45,11 @@ def import_csv_to_df(file_path, sub_sample=False):
     df = pd.read_csv(file_path, nrows=50 if sub_sample else None)
     
     return df
+
+def info(df, info = False):
+    for key in df.keys():
+      perc_nan = np.sum(df[key].isna()) / len(df[key])
+      print("% of NaN values of ", key, " is ", perc_nan)
+    if info:
+      df.info()
+    return
