@@ -10,6 +10,7 @@ Wikipedia, while increasingly vigilant against fake news, is a primary informati
 - Is there a difference between these Wikipedia views and those of the most popular non-covid related theories?  
 - Is there an increase in fake news publication during COVID-19? What is the percentage of fake vs. real news on the subject for each language?
 - What are the principal themes of fake news that emerged during COVID-19? are these common to the theories found on Wikipedia?
+  
 For the next step of our project:
 - Are the themes of conspiracy theories common between languages? and do they gain more or less traction in certain languages?
 - Does the source of the news have an influence? (e.g. if fake news are born from Twitter, does the related mobile Wikipedia app spike?)
@@ -28,6 +29,7 @@ Paper: Yichuan Li, Bohan Jiang, Kai Shu, and Huan Liu. 2020. MM-COVID: A Multili
 - *News category clustering:* using the subgroups from the previous point to categorize the news in the MM-covid dataset with the same classes.
 - *Wikipedia query:* Through the Wikipedia API we obtain the pageviews of the categories/pages of interest.
 - *Qualitative analysis:* an examination of the content of fake news articles or tweets from the MM-COVID dataset after clustering. Investigation of the time-evolution of pageview counts for each set of theories/fake news. Empirical analysis to see if there is a difference between languages for the fake news dataset.
+  
 For the next steps of our project:
 - *Enrichment of current analysis* by analyzing more languages and more news.
 - *Quantitative analysis:* statistical tests (difference in differences, correlation test).
@@ -35,6 +37,7 @@ For the next steps of our project:
 ## 4) Organization of the tasks:
 - 17-24 Nov: Automating the process of clustering MM-covid dataset based on the categories of the conspiracy theories dataset.
 - 24 Nov-8 Dec: 1) Collecting all the final data and completing the plots.
+  
                 2) Beginning the data story website. 
 - 8 Dec- 15 Dec: Finding and performing relevant statistical analysis on our data.
 - 15-23 Dec: Finalizing the data story and the relevant plots. Cleaning the notebooks.
