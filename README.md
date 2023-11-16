@@ -37,7 +37,6 @@ For the next steps of our project:
 ## 4) Organization of the tasks:
 - 17-24 Nov: Automating the process of clustering MM-covid dataset based on the categories of the conspiracy theories dataset.
 - 24 Nov-8 Dec: 1) Collecting all the final data and completing the plots.
-  
                 2) Beginning the data story website. 
 - 8 Dec- 15 Dec: Finding and performing relevant statistical analysis on our data.
 - 15-23 Dec: Finalizing the data story and the relevant plots. Cleaning the notebooks.
