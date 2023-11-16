@@ -23,14 +23,14 @@ For the next step of our project:
 Paper: Yichuan Li, Bohan Jiang, Kai Shu, and Huan Liu. 2020. MM-COVID: A Multilingual and Multimodal Data Repository for Combating COVID-19 Disinformation. arXiv:2011.04088 [cs.SI].
 
 ## 3) Methods:
-- Data processing: Filtering the MM-Covid dataset to keep only the columns of interest.
-- Data wrangling and clustering: Creation of the conspiracy theories datasets from Wikipedia (one Covid-related and one non-Covid-related) and clustering them into subgroups.
-- News category clustering: using the subgroups from the previous point to categorize the news in the MM-covid dataset with the same classes.
-- Wikipedia query: Through the Wikipedia API we obtain the pageviews of the categories/pages of interest.
-- Qualitative analysis: an examination of the content of fake news articles or tweets from the MM-COVID dataset after clustering. Investigation of the time-evolution of pageview counts for each set of theories/fake news. Empirical analysis to see if there is a difference between languages for the fake news dataset.
+- *Data processing:* Filtering the MM-Covid dataset to keep only the columns of interest.
+- *Data wrangling and clustering:* Creation of the conspiracy theories datasets from Wikipedia (one Covid-related and one non-Covid-related) and clustering them into subgroups.
+- *News category clustering:* using the subgroups from the previous point to categorize the news in the MM-covid dataset with the same classes.
+- *Wikipedia query:* Through the Wikipedia API we obtain the pageviews of the categories/pages of interest.
+- *Qualitative analysis:* an examination of the content of fake news articles or tweets from the MM-COVID dataset after clustering. Investigation of the time-evolution of pageview counts for each set of theories/fake news. Empirical analysis to see if there is a difference between languages for the fake news dataset.
 For the next steps of our project:
-- Enrichment of current analysis by analyzing more languages and more news.
-- Quantitative analysis: statistical tests (difference in differences, correlation test).
+- *Enrichment of current analysis* by analyzing more languages and more news.
+- *Quantitative analysis:* statistical tests (difference in differences, correlation test).
 
 ## 4) Organization of the tasks:
 - 17-24 Nov: Automating the process of clustering MM-covid dataset based on the categories of the conspiracy theories dataset.
