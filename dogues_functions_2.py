@@ -63,8 +63,8 @@ def fetch_pageview_count(language, articles):
         "access": "all-access",
         "agent": "user",
         "granularity": "daily",
-        "start": "20190101",
-        "end": "20230531"
+        "start": "20200101",
+        "end": "20200630"
     }
 
     headers = {
