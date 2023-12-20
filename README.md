@@ -1,6 +1,6 @@
 # Thedogues1815 project folder -> [Our datastory](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
-## Wiki and wacky Covid news
+## # Wiki's Wacky Covid Factory
 The goal of this project is to showcase the link between Wikipedia and the spread of Fake news, conspiracy theories, and general misinformation on COVID-19, and to study their contents in different languages. 
 
 Can wikipedia viewcounts be used as a marker to identify fake news trends?
