@@ -89,12 +89,12 @@ How different are the past analysis if we consider different languages? Are ther
         - Prevention
         - Vaccines
         - Treatment
-        
+
 - *Action 1.2:*
-    - From there, we perform a bag of word analysis to see which key words come out often for different categories
+    - From there, we perform a bag of word analysis to see which key words come out often for different categories.
 
 - *Action 1.3:* 
-    - We introduce the news dataset which we will plot along the various 
+    - We introduce the news dataset. Using the BOW method applied from
 
 #### **Part III**: Multilingual analysis of COVID-19 misinformation
 - *Datasets used:* Multi_lang_COVID_msinforamtion
