@@ -81,8 +81,20 @@ How different are the past analysis if we consider different languages? Are ther
 - *Goal:* Identify the relationship between media attention towards COVID related fake news and wikipedia article attention. With this we can build a timeline of user interest towards various topics and see how restrictions in mobility affected the types of misinformation that circulated
 
 *Method:* 
-- *Action 1.1:* 
-ehhfb
+- *Action 1.1:*
+    - We group articles and their views along the selected main categories defined in the wikipedia COVID-19 misinformation categories. They are: 
+        - Virus origin
+        - Incidence and mortality
+        - Disease spread
+        - Prevention
+        - Vaccines
+        - Treatment
+        
+- *Action 1.2:*
+    - From there, we perform a bag of word analysis to see which key words come out often for different categories
+
+- *Action 1.3:* 
+    - We introduce the news dataset which we will plot along the various 
 
 #### **Part III**: Multilingual analysis of COVID-19 misinformation
 - *Datasets used:* Multi_lang_COVID_msinforamtion
