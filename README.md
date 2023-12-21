@@ -66,15 +66,17 @@ How different are the past analysis if we consider different languages? Are ther
 
 - **QUESTIONS ABOUT THIS PART -> HOW WAS THE DATA AGGREGATED**
 - *Action 1.2:* 
-    - We are wondering about the increase of interest towards Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the COVID lockdown period (2020 vs 2022) by applying the difference in difference method. 
-    - We use the data after the pandemic, as some relevant articles (eg. plandemic) were created during the lockdown period and did not exist before. We do this to compare the pageviews of all articles (main trend, view as baseline), general Fake news related articles, and COVID-19 related fake news. 
-
+    - We are wondering about the increase of interest towards Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the first COVID lockdown period (march 2020 to may 2020) by applying the difference in difference method.
+    - 
 - *Action 1.3* 
-    - We use a t-test to evaluate whether the relative increase of each part is relevant or not.
+    - After seeing a significative increase of 50 % for fake news we go more in depth and evaluated the increase in covid related fake news. To do that we use the covid-misinformation dataset and apply the difference and difference method to compare the increase with the wikipedia baseline.
 
 *Analysis:* 
-- We find that the general attention towards Fake News could not be differentiated from the rise in attention towards wikipedia articles as a whole, which is surprising. However the rise in attention towards COVID-19 conspiracy articles was clear (which makes sense as we selected them in this way). 
-- This allows us to prove that we can extract articles directly related to COVID-19 misinformation subjects, and that they are identifiable through wikipedia pageviews. We can also cluster them based on more general topics thanks to the titles and subtitles, which allows us to do further analysis.
+- We find that their is an important rise in attention towards fake news during the lockdown. From the linear regression, we obtain an R-squared =  0.692, P-value = 0.00 and coefficient = 0.4819. This indicates around a 50% increase in attention towards fake news that can't be explained by the rise in general wikipedia usage.
+
+- Furthermore, the rise in attention towards Covid related fake news is even more important with an  R-squared = 0.470, P-value = 0.00 and coefficient = 0.9986. This indicates that their is around a 100% increase in attention towards COVID-19 conspiracy articles.
+
+  This allows us to prove that we can extract articles directly related to COVID-19 misinformation subjects, and that they are identifiable through wikipedia pageviews. We can also cluster them based on more general topics thanks to the titles and subtitles, which allows us to do further analysis.
 
 #### **Part II**: COVID-19 misinformation, the relationship between media attention and Wikipedia pageviews
 - *Datasets used:* Covid_misinformation & News_dataset_cl
