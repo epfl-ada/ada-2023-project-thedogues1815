@@ -67,7 +67,7 @@ How different are the past analysis if we consider different languages? Are ther
 - **QUESTIONS ABOUT THIS PART -> HOW WAS THE DATA AGGREGATED**
 - *Action 1.2:* 
     - We are wondering about the increase of interest towards Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the first COVID lockdown period (march 2020 to may 2020) by applying the difference in difference method.
-    - 
+
 - *Action 1.3* 
     - After seeing a significative increase of 50 % for fake news we go more in depth and evaluated the increase in covid related fake news. To do that we use the covid-misinformation dataset and apply the difference and difference method to compare the increase with the wikipedia baseline.
 
