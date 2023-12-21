@@ -91,12 +91,17 @@ How different are the past analysis if we consider different languages? Are ther
         - Treatment
 
 - *Action 1.2:*
-    - From there, we perform a bag of word analysis to see which key words come out often for the different categories
+    - From there, we perform a bag of word analysis to see which key words come out for the different categories.
 
 - *Action 1.3:* 
-    - We introduce the news dataset from the paper. 
-    - Using the main categories defined in *Action 1.1* we cluster the 
+    - We introduce the news dataset from the paper.
+    - Using the main categories defined in *Action 1.1* we cluster the news articles based on these topics. For this we create a bag of words for each "Main Heading" .
+    - Covid misinformation, stemming, lower casing
+    - Clustering - > New colmns (Main Heading & sub categories) -> Check if words from BOW are in the claim for each Main Heaing/ su heading combination
+    - 1 news can belong to multiple categories 
 
 #### **Part III**: Multilingual analysis of COVID-19 misinformation
 - *Datasets used:* Multi_lang_COVID_msinforamtion
+
+
 
