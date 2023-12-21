@@ -47,7 +47,7 @@ How different are the past analysis if we consider different languages? Are ther
     - *Used in part II*
 4. *Mobility_2020-2022:* We used the mobility time series to extract the important mobility restriction periods. We can then use this to identify the link between the different phases of mobility restrictions 
     - *Used in part II*
-5. *Multi_lang_COVID_misinformation:* We apply the function and preprocessing developped for the COVID_misinformation part and apply it to COVID misinformation pages in French, Italian and Spanish. We then also translated all the part titles and subtitles, and used the wikipedia API to identify the english version of the articles referenced in the other language pages. THis allows us to create a common ground to compare the overlap of referenced articles accross languages.
+5. *Multi_lang_COVID_misinformation:* We apply the function and preprocessing developped for the COVID_misinformation part and apply it to COVID misinformation pages in French, Italian and Spanish. We then also translated all the part titles and subtitles, and used the wikipedia API to identify the english version of the articles referenced in the other language pages. This allows us to create a common ground to compare the overlap of referenced articles accross languages, and to study interest towards COVID-19 Fake News accross multiple languages
     - *Used in part III*
 
 ### **Methodology & Analysis:**
@@ -91,10 +91,11 @@ How different are the past analysis if we consider different languages? Are ther
         - Treatment
 
 - *Action 1.2:*
-    - From there, we perform a bag of word analysis to see which key words come out often for different categories.
+    - From there, we perform a bag of word analysis to see which key words come out often for the different categories
 
 - *Action 1.3:* 
-    - We introduce the news dataset. Using the BOW method applied from
+    - We introduce the news dataset from the paper. 
+    - Using the main categories defined in *Action 1.1* we cluster the 
 
 #### **Part III**: Multilingual analysis of COVID-19 misinformation
 - *Datasets used:* Multi_lang_COVID_msinforamtion
