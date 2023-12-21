@@ -152,15 +152,19 @@ def get_wiki_titles(url, target_language='en'):
 
     # Check if the response is successful
     if response.status_code == 200:
-        data = response.json()
-        pages = data['query']['pages']
-        page_id = next(iter(pages))  # Get the first page id
-        langlinks = pages[page_id].get('langlinks', [])
-        
-        # Find the title in the target language in the langlinks
-        for link in langlinks:
-            if link['lang'] == target_language:
-                return link['*']
+        try:
+            data = response.json()
+            pages = data['query']['pages']
+            page_id = next(iter(pages))  # Get the first page id
+            langlinks = pages[page_id].get('langlinks', [])
+            
+            # Find the title in the target language in the langlinks
+            for link in langlinks:
+                if link['lang'] == target_language:
+                    return link['*']
+        except Exception as e:
+            print(f"Error retrieving data: {e}")
+            return None
         
         print(f"No article found in {target_language}")
         return None
@@ -196,24 +200,29 @@ def get_english_wiki_titles(df, link_column='Full Links', new_full_link_column='
         english_relative_links = []
 
         for article_url in row[link_column]:
-            # Assuming the URLs in 'Full_Links' are complete URLs to Wikipedia articles
-            titles = get_wiki_titles(article_url, 'en')
-            english_title = titles if titles else None  # Get English title if available
+            try:
+                # Assuming the URLs in 'Full_Links' are complete URLs to Wikipedia articles
+                titles = get_wiki_titles(article_url, 'en')
+                english_title = titles if titles else None  # Get English title if available
 
-            if english_title:
-                # Replace spaces with underscores and encode the title for URL
-                encoded_english_title = quote(english_title.replace(' ', '_'))
+                if english_title:
+                    # Replace spaces with underscores and encode the title for URL
+                    encoded_english_title = quote(english_title.replace(' ', '_'))
 
-                # Construct a full URL and a relative URL with the English title
-                english_full_url = f'https://en.wikipedia.org/wiki/{encoded_english_title}'
-                english_relative_url = f'/wiki/{encoded_english_title}'
+                    # Construct a full URL and a relative URL with the English title
+                    english_full_url = f'https://en.wikipedia.org/wiki/{encoded_english_title}'
+                    english_relative_url = f'/wiki/{encoded_english_title}'
 
-                english_full_links.append(english_full_url)
-                english_relative_links.append(english_relative_url)
-            else:
-                # If no English version is found, keep the original URL in both columns
+                    english_full_links.append(english_full_url)
+                    english_relative_links.append(english_relative_url)
+                else:
+                    # If no English version is found, keep the original URL in both columns
+                    english_full_links.append(article_url)
+                    english_relative_links.append(article_url)  # or leave it empty if preferred
+            except Exception as e:
+                print(f"Error fetching English title for {article_url}: {e}")
                 english_full_links.append(article_url)
-                english_relative_links.append(article_url)  # or leave it empty if preferred
+                english_relative_links.append(article_url)
 
         english_titles_df.at[index, new_full_link_column] = english_full_links
         english_titles_df.at[index, new_relative_link_column] = english_relative_links
@@ -235,20 +244,22 @@ def multi_lang_df(url = "https://en.wikipedia.org/wiki/COVID-19_misinformation",
             # Extract the wiki page, we use English as the reference language
             final_page = scrape_wikipedia_page(article_title, language=language)
         else:
+            print("Ruski 1")
             # Extract the wiki page
             raw_page = scrape_wikipedia_page(article_title, language=language)
-
+            print("Ruski 2")
             # Remove uninteresting parts
             if language == "it":
                 raw_page = raw_page[raw_page['Main Heading'] != 'Menu di navigazione']
             if language == "fr":
                 raw_page = raw_page[raw_page['Main Heading'] != 'Voir aussi']
-
+            print("Ruski 3")
             # Translate the original page to English
             translated_page = translate_dataframe_columns(df=raw_page, columns=["Main Heading", "Subheading", "Sub-subheading"])
+            print("Ruski 4")
             # Get the equivalent English articles for comparison
             final_page = get_english_wiki_titles(translated_page)
-
+            print("Ruski 5")
         headings_dict[language] = final_page
 
     return headings_dict

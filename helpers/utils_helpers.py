@@ -5,6 +5,8 @@ import requests
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from urllib.parse import quote
+from ast import literal_eval
+
 
 
 def spaces_to_underscore(df, column):
@@ -67,3 +69,21 @@ def normal_data(list_data):
     max_val = max(list_data)
     norm   = np.array(list_data)/max_val
     return norm
+
+def read_csv_convert_list(csv_file, list_columns):
+    """
+    Read a CSV file and convert specified columns from string representations of lists to actual lists.
+
+    :param csv_file: Path to the CSV file.
+    :param list_columns: List of column names that need to be converted from strings to lists.
+    :return: Pandas DataFrame with converted columns.
+    """
+    df = pd.read_csv(csv_file)
+
+    for column in list_columns:
+        if column in df.columns:
+            df[column] = df[column].apply(literal_eval)
+        else:
+            print(f"Column {column} not found in the DataFrame.")
+
+    return df
