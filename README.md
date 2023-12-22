@@ -61,16 +61,17 @@ How different are the past analyses if we consider different languages? Are ther
 
 *Method:* 
 - *Action 1.1:* 
-    - While all the articles from the *Conspiracy_dataset* are directly related to given Fake News, the same cannot be said from the articles parsed from the one COVID-19_msinformation dataset. 
-    - Some articles are too general and have too many cofounders due to the high traffic that they drive and their relationship to many misinformation subjects at once (eg. Donald Trump, Steve Bannon...), and others cannot directly be shown to be COVID related (eg. Chinese Communist Party). 
+    -Clean the COVID_misinformation database as some articles have too many cofounders due to the high traffic that they drive and their relationship to many misinformation subjects at once (eg. Donald Trump, Steve Bannon...), and others cannot directly be shown to be COVID related (eg. Chinese Communist Party).
+  
     - As such, we performed feature analysis, hand labeling articles that we deemed relevant (high spike in attention, low attention pre-lockdown, higher attention after lockdown), and those that we deemed irrelevant.
     - This allowed for an efficient selection of articles directly related to Fake news topics based on [Skewness](https://en.wikipedia.org/wiki/Skewness), Max Views, and the [Kurtosis metric](https://en.wikipedia.org/wiki/Kurtosis) (see the relevant part in the notebook for more contextual information on metrics).
 
 - **QUESTIONS ABOUT THIS PART -> HOW WAS THE DATA AGGREGATED**
 - *Action 1.2:* 
     - We are curious about the increase of interest in Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the first COVID lockdown period (march 2020 to May 2020) by applying the difference in difference method.
+-
 
-- *Action 1.3* 
+- *Action 1.4* 
     - After seeing a significant increase of 50 % for fake news we went more in-depth and evaluated the increase in COVID-related fake news. To do that we use the covid-misinformation dataset and apply the difference and difference method to compare the increase with the Wikipedia baseline.
 
 *Analysis:* 
