@@ -5,13 +5,26 @@ import requests
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from urllib.parse import quote
-from ast import literal_eval
-
+import re
 
 
 def spaces_to_underscore(df, column):
     df[column] = df[column].str.replace(" ", "_")
     return df
+
+def clean_article_name(article):
+    # Remove the year from the article name using regular expressions
+    return re.sub(r'\([^)]*\)', '', article).strip()
+
+# Cleaning the clusters to only obtain words searcheable in wikipedia API
+def extract_clean_text(links):
+    cleaned_links = []
+    for link in links:
+        if '/wiki/' in link:
+            extracted_text = link.split('/wiki/')[1].split('#')[0].replace('_', ' ')
+            cleaned_links.append(extracted_text)
+    return cleaned_links
+
 
 def import_json_to_df(json_file_path, exclude_fields = None, sub_sample=None):
     data = []  # List to store the processed records
@@ -69,21 +82,3 @@ def normal_data(list_data):
     max_val = max(list_data)
     norm   = np.array(list_data)/max_val
     return norm
-
-def read_csv_convert_list(csv_file, list_columns):
-    """
-    Read a CSV file and convert specified columns from string representations of lists to actual lists.
-
-    :param csv_file: Path to the CSV file.
-    :param list_columns: List of column names that need to be converted from strings to lists.
-    :return: Pandas DataFrame with converted columns.
-    """
-    df = pd.read_csv(csv_file)
-
-    for column in list_columns:
-        if column in df.columns:
-            df[column] = df[column].apply(literal_eval)
-        else:
-            print(f"Column {column} not found in the DataFrame.")
-
-    return df
