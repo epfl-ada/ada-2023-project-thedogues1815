@@ -46,27 +46,61 @@ def fetch_pageview_count(language, articles, start_date = "20220101", end_date =
 
     return pageviews_data
 
+def fetch_and_combine_pageview_data(language, input_df):
+    """
+    Fetches pageview count data for each article in the input DataFrame and combines the data into a new DataFrame.
+
+    Parameters:
+    - language (str): Language code for the Wikipedia page.
+    - input_df (pd.DataFrame): Input DataFrame containing articles.
+
+    Returns:
+    - pd.DataFrame: Combined DataFrame with pageview count data.
+    """
+
+    # Create an empty DataFrame to store the combined data
+    combined_df = pd.DataFrame()
+
+    # Iterate through the list of articles
+    for i in range(len(input_df['Linked_Article'])):
+        try:
+            # Fetch pageview count data for the current article
+            articles_list = [input_df['Linked_Article'].iloc[i]]
+            result = fetch_pageview_count(language, articles_list)  # Assuming fetch_pageview_count is a defined function
+
+            # Extract relevant data and append it to the combined DataFrame
+            if input_df['Linked_Article'].iloc[i] in result:
+                current_df = result[input_df['Linked_Article'].iloc[i]].drop(['project', 'granularity', 'access', 'agent'], axis=1)
+                current_df['article'] = input_df['Linked_Article'].iloc[i]
+                combined_df = pd.concat([combined_df, current_df], ignore_index=True)
+
+        except Exception as e:
+            print(f"Error fetching data for {input_df['Linked_Article'].iloc[i]}: {e}")
+
+    return combined_df
+
+
 def fetch_viewcount_df(df, column = 'Page', language = "en", start_date = "20200113", end_date = "20200420", granularity = "monthly", wiki = False):
   # Create an empty DataFrame to store the combined data
   combined_df = pd.DataFrame()
 
   # Iterate through the list of articles
   for i in range(len(df[column])):
-      try:
+    try:
           # Fetch pageview count data for the current article
-          articles_list = [df[column].iloc[i]]
-          result = fetch_pageview_count(language, articles_list, start_date, end_date, granularity)
+        articles_list = [df[column].iloc[i]]
+        result = fetch_pageview_count(language, articles_list, start_date, end_date, granularity)
 
           # Extract relevant data and append it to the combined DataFrame
-          if df[column].iloc[i] in result:
-              current_df = result[df[column].iloc[i]].drop(['project', 'granularity', 'access', 'agent'], axis=1)
-              current_df['article'] = df[column].iloc[i]
-              combined_df = pd.concat([combined_df, current_df], ignore_index=True)
+        if df[column].iloc[i] in result:
+            current_df = result[df[column].iloc[i]].drop(['project', 'granularity', 'access', 'agent'], axis=1)
+            current_df['article'] = df[column].iloc[i]
+            combined_df = pd.concat([combined_df, current_df], ignore_index=True)
 
-      except Exception as e:
+    except Exception as e:
           print(f"Error fetching data for {df[column].iloc[i]}: {e}")
 
-  return combined_df
+    return combined_df
 
 def scrape_wikipedia_page(article_title, language="en"):
     # Replace spaces with underscores and decode for Wikipedia URL format
@@ -128,7 +162,7 @@ def scrape_wikipedia_page(article_title, language="en"):
     else:
         # Return an empty DataFrame if the page could not be retrieved
         return pd.DataFrame()
-    
+
 def get_wiki_titles(url, target_language='en'):
     # Extract the language and URL-decoded title from the URL
     split_url = url.split('/')
@@ -157,21 +191,22 @@ def get_wiki_titles(url, target_language='en'):
             pages = data['query']['pages']
             page_id = next(iter(pages))  # Get the first page id
             langlinks = pages[page_id].get('langlinks', [])
-            
+
             # Find the title in the target language in the langlinks
             for link in langlinks:
                 if link['lang'] == target_language:
                     return link['*']
-        except Exception as e:
-            print(f"Error retrieving data: {e}")
+
+            print(f"No article found in {target_language}")
             return None
-        
-        print(f"No article found in {target_language}")
-        return None
+        except KeyError:
+            print("Unexpected API response format")
+            return None
     else:
-        print("Failed to retrieve data")
+        print(f"Failed to retrieve data. Status code: {response.status_code}")
         return None
-  
+
+
 def translate_dataframe_columns(df, columns, dest_lang='en'):
     translator = Translator()
     
@@ -200,29 +235,24 @@ def get_english_wiki_titles(df, link_column='Full Links', new_full_link_column='
         english_relative_links = []
 
         for article_url in row[link_column]:
-            try:
-                # Assuming the URLs in 'Full_Links' are complete URLs to Wikipedia articles
-                titles = get_wiki_titles(article_url, 'en')
-                english_title = titles if titles else None  # Get English title if available
+            # Assuming the URLs in 'Full_Links' are complete URLs to Wikipedia articles
+            titles = get_wiki_titles(article_url, 'en')
+            english_title = titles if titles else None  # Get English title if available
 
-                if english_title:
-                    # Replace spaces with underscores and encode the title for URL
-                    encoded_english_title = quote(english_title.replace(' ', '_'))
+            if english_title:
+                # Replace spaces with underscores and encode the title for URL
+                encoded_english_title = quote(english_title.replace(' ', '_'))
 
-                    # Construct a full URL and a relative URL with the English title
-                    english_full_url = f'https://en.wikipedia.org/wiki/{encoded_english_title}'
-                    english_relative_url = f'/wiki/{encoded_english_title}'
+                # Construct a full URL and a relative URL with the English title
+                english_full_url = f'https://en.wikipedia.org/wiki/{encoded_english_title}'
+                english_relative_url = f'/wiki/{encoded_english_title}'
 
-                    english_full_links.append(english_full_url)
-                    english_relative_links.append(english_relative_url)
-                else:
-                    # If no English version is found, keep the original URL in both columns
-                    english_full_links.append(article_url)
-                    english_relative_links.append(article_url)  # or leave it empty if preferred
-            except Exception as e:
-                print(f"Error fetching English title for {article_url}: {e}")
+                english_full_links.append(english_full_url)
+                english_relative_links.append(english_relative_url)
+            else:
+                # If no English version is found, keep the original URL in both columns
                 english_full_links.append(article_url)
-                english_relative_links.append(article_url)
+                english_relative_links.append(article_url)  # or leave it empty if preferred
 
         english_titles_df.at[index, new_full_link_column] = english_full_links
         english_titles_df.at[index, new_relative_link_column] = english_relative_links
@@ -244,22 +274,22 @@ def multi_lang_df(url = "https://en.wikipedia.org/wiki/COVID-19_misinformation",
             # Extract the wiki page, we use English as the reference language
             final_page = scrape_wikipedia_page(article_title, language=language)
         else:
-            print("Ruski 1")
             # Extract the wiki page
             raw_page = scrape_wikipedia_page(article_title, language=language)
-            print("Ruski 2")
+
             # Remove uninteresting parts
             if language == "it":
                 raw_page = raw_page[raw_page['Main Heading'] != 'Menu di navigazione']
             if language == "fr":
                 raw_page = raw_page[raw_page['Main Heading'] != 'Voir aussi']
-            print("Ruski 3")
+
             # Translate the original page to English
             translated_page = translate_dataframe_columns(df=raw_page, columns=["Main Heading", "Subheading", "Sub-subheading"])
-            print("Ruski 4")
             # Get the equivalent English articles for comparison
             final_page = get_english_wiki_titles(translated_page)
-            print("Ruski 5")
+
         headings_dict[language] = final_page
 
     return headings_dict
+
+
