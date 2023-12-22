@@ -64,8 +64,12 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
 
 *Method:* 
 - *Action 1.1:* 
-    - We are curious about the increase of interest in Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the first COVID lockdown period (march 2020 to May 2020) by analysing the evolution of interest in fake news article that can't be explained by the increase use of wikipedia by applying the difference in difference method. (e.i ....)
-    - 
+    - We are curious about the increase of interest in Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the first COVID lockdown period (march 2020 to May 2020) by analysing the evolution of interest in fake news article that can't be explained by the increase use of wikipedia by applying the difference in difference method.
+      - To do that, we first got the percentage of increase in wikipedia views compared to baseline of 2018 and the percentage of views increase for wikipedia conspiracy theories compared to 2018.
+      - Then, we isolated fake news increase by substracting the conspiracies theory increase with the wikipedia increase for each day to get the comparative increase in Wikipedia articles related to conspiracy theories.
+      - Grouping data: we divided the data in a "before lockdown" where we took the comparative increase before the lockdown and another group "in lockdown" where we took the comparative increase during the lockdown. We then did a regression analysis between the two groups.
+        
+increase in view during 2020, both measured as percentage increases from baseline year 2018
 - *Action 1.2:* 
     - Clean the COVID_misinformation dataset as some articles have too many cofounders due to the high traffic that they drive and their relationship to many misinformation subjects at once (eg. Donald Trump, Steve Bannon...), and others cannot directly be shown to be COVID related (eg. Chinese Communist Party).
     - As such, we performed feature analysis, hand labeling articles that we deemed relevant (high spike in attention, low attention pre-spike, higher attention after post-lockdown), and those that we deemed irrelevant.
