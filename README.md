@@ -62,7 +62,6 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
 - *Datasets used:* Aggregated_timeseries & Conspiracy_dataset & Covid_misinformation
 
 *Goal:* Identify a methodology to extract articles related to COVID-19 misinformation. Progressive zoom in the Wikipedia COVID fake news and theories landscape: Assess how relevant fake news and theories were, and more in-depth about Covid related Fake News.
-
 *Method:* 
 - *Preprocessing:*
     - We perform feature analysis on the *Covid_misinformation* dataset to remove irrelevant articles with heavy cofounders (eg. Donald Trump ect) or no close relationship to the topic.
@@ -111,5 +110,11 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
 - *Action 3.4:*
     - We construct a chord plot with the thickness of the chords tying two languages proportional to the count of shared articles between languages.
 
+### Work sharing
+Tecla - Website + Part II & III -> Bag of words methods
+Pablo - Part I & II -> Feature analysis
+Antonio - Part I & II -> DinD, correlation
+William - Part I + Data Story -> 
+Victor - Part III + Data Story -> Dataset construction, wiki API
 
 
