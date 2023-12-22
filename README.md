@@ -63,14 +63,13 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
 
 *Method:* 
 - *Action 1.1:* 
+    - We are curious about the increase of interest in Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the first COVID lockdown period (march 2020 to May 2020) by analysing the evolution of interest in fake news article that can't be explained by the increase use of wikipedia by applying the difference in difference method. (e.i ....)
+    - 
+- *Action 1.2:* 
     - Clean the COVID_misinformation dataset as some articles have too many cofounders due to the high traffic that they drive and their relationship to many misinformation subjects at once (eg. Donald Trump, Steve Bannon...), and others cannot directly be shown to be COVID related (eg. Chinese Communist Party).
     - As such, we performed feature analysis, hand labeling articles that we deemed relevant (high spike in attention, low attention pre-lockdown, higher attention after lockdown), and those that we deemed irrelevant.
     - This allowed for an efficient selection of articles directly related to Fake news topics based on [Skewness](https://en.wikipedia.org/wiki/Skewness), Max Views, and the [Kurtosis metric](https://en.wikipedia.org/wiki/Kurtosis) (see the relevant part in the notebook for more contextual information on metrics).
-
-- **QUESTIONS ABOUT THIS PART -> HOW WAS THE DATA AGGREGATED**
-- *Action 1.2:* 
-    - We are curious about the increase of interest in Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the first COVID lockdown period (march 2020 to May 2020) by analysing the evolution of interest in fake news article that can't be explained by the increase use of wikipedia by applying the difference in difference method. (e.i ....)
-
+      
 - *Action 1.3* 
     - After seeing a significant increase of 50 % for fake news we went more in-depth and evaluated the relative increase in COVID-19 related fake news. To do that we use the COVID-19 misinformation dataset and applied the difference and difference method to compare the increase in COVID-19 related fake news with the increase in overall wikipedia views.
 
@@ -80,12 +79,13 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
 - Furthermore, the rise in attention towards COVID-related fake news is even more substantial with an  R-squared = 0.470, P-value = 0.00, and coefficient = 0.9986. This indicates that there is around a 100% increase in attention towards COVID-19 conspiracy articles.
 
   This allows us to prove that we can extract articles directly related to COVID-19 misinformation subjects and that they are identifiable through Wikipedia page views. We can also cluster them based on more general topics thanks to the titles and subtitles, which allows us to do further analysis.
+  
 #### **Part II**: Wikipedia as a vigilante against misinformation
 - *Datasets used:* Covid_misinformation & News_dataset_cl
 - *Goal:* Study the overlap between COVID misinformation in Wikipedia and web-published fake news. Then we try to identify the relationship between media attention towards COVID-related fake news and Wikipedia article attention. With this, we can build a timeline of user interest towards various topics and see how restrictions in mobility affect the types of misinformation that are circulated.
 
 *Method:* 
-- *Action 1.1:*
+- *Action 2.1:*
     - We group articles and their views along the selected main categories defined in the Wikipedia [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) categories (based on the article's main headings). Our Fake News Topics are: 
         - Virus origin
         - Incidence and mortality
@@ -95,16 +95,22 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
         - Treatment
     - From there, we use the subtitles and sub-subtitles of each main category from the wikipedia article to build a bag of words (bow) to classify the web news dataset. With this, we have a bag of words for each main heading which represents the topics covered. (Note: recurrent words which were not representative of each category were removed -> eg. COVID-19, country names...)
 
-- *Action 1.2:*
+- *Action 2.2:*
     - We introduce the news_dataset from [MM-COVID: A Multilingual and Multimodal Data Repository for Combating COVID-19 Disinformation](https://arxiv.org/abs/2011.04088). As we are currently studying the english version of the [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) article, we focus on the english based language Fake News. This dataset gives us access to 2168 individual pieces of media content which have been labelled as Fake.
      - Using the BoW created in *Action 1.2*, we then classify the selected news articles into the 6 categories. A piece of news is classified as belonging to a Fake News topic if the claim (short description of the piece of news) contains words from the BoW. (note that a piece of news can be classified into more than one category)
      - Based on this, we can see that 84% of the topics covered by the Fake news dataset are represented in the topics covered by the wikipedia article.
 
-- *Action 1.3:*
-    - We plot a weighted average of the viewcount from   
+- *Action 2.3:*
+    - We plot a weighted average of the viewcounts from the selected articles next to the daily article parution trend of the news dataset
+    - We then measure the correlation between the two trends to show that parution and wikipedia interest are also linked
+    - Note -> A similar study could also be done by looking at the parution of wikipedia articles, but this goes beyond the scope of our approach, and we only consider articles which existed for the whole duration of our studied timeline for an easier direct comparison.
 
-- *Action 1.4:*
-    - We then plot the timeline of published news along with the view count of the corresponding Wikipedia articles per main category and try to infer a correlation between them. 
+- *Action 2.4:*
+    - When looking at the topical sort of our news dataset, we see that we come short as we don't have enough data points and we cannot make any interestign analysis
+    - However we have shown in Actions 2.2 and 2.3 that the [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) is a good topical an behavioural match to general web media attention.
+    - From these observations we leverage the pre existing wikipedia article structure to perform an analysis of Fake News interest according to our Fake News topics. We plot two kinds of graphs. One which highlights the relative speed of viewcount increase (virality) compared to the wikipedia baseline, and one which highligts the relative increase (popularity) compared to the wikipedia baseline. For both o
+        - *Virality (speed of viewcount increase):* For this, we evaluate the global trend of article views from the *Aggregated timeseries* dataset by convolving a derivative filter along the total view count of articles and then applying a min max normalization. We then apply the same process for each article which we have deemed relevant in *Action 1.2*. We then substract the global trend from the article trend. This highlights the difference in virality between the considered article and the general virality of articles on wikipedia. For each Fake news topic, we then aggregate all of their linked articles through a weighted sum (coefficients based on article mean views ver selected period / sum of article mean views).
+        - *Popularity (percentage of viewcount increase):* The process is the exactly the same but we do not apply the derivative filer and proceed straight to min max normalization.
   
 *Analysis:* 
     - Following our bow analysis, we mana
