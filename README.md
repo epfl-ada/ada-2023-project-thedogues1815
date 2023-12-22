@@ -24,15 +24,17 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
 ## Research questions: 
 
 1. **Was COVID a hot topic during lockdown?**
-During the period of interest (lockdown of 2020), compared with other years, is there a statistically significant increase in views for pages related to fake news compared to other articles in Wikipedia? It's interesting to investigate what this tells us about the public’s interests: can we differentiate the increase in fake news interest from the general increase in traffic to Wikipedia during the lockdown period? And what about Covid-related news?
+- During the period of interest (lockdown of 2020), compared with other years, is there a statistically significant increase in views for pages related to fake news compared to other articles in Wikipedia?
+- If that is the case, can we differentiate the increase in fake news interest from the general increase in traffic to Wikipedia during the lockdown period?
+- And what about Covid-related misinformation?
 
-2. **Wikipedia as a vigilante against misinformation**
-We want to analyse fake news published on the web during the COVID lockdown. First, is Wikipedia vigilant enough against fake news and theories? If we prove that there is a good overlap between the information conveyed on the web and those reported as misinformation in Wikipedia then we can say that it is.
-Then we analyse this temporally: is there a correlation between fake news publications and Wikipedia pageview count increase? 
-What can we observe? Which comes first? How are they related to restricted mobility periods?
+2. **Wikipedia as a tool to study misinformation**
+- What is the relationship between fake news published on the web during the COVID lockdown and articles labelled as linked with COVID-19 misinformation on wikipedia? Is Wikipedia attention a good representation fo global media attention?
+- Can we identify a storyline of interest towards different Fake News topics? How is the evolution of interest related to restricted mobility periods? Is Wikipedia a better tool to do this than currently existing web news datasets?
 
-4. **Covid fake news around the world**
-How different are the past analyses if we consider different languages? Are there cultural differences between popular fake news or do they overlap? 
+3. **Covid fake news around the world**
+- Which languages shared the most in common during their coverage of Fake News during the COVID crisis? What topics were they most interested in?
+- How does our past analysis now look like if we consider different languages?
 
 ## Dataset construction, methodology, analysis
 **N.B:** In parts I and II, we focus on English Wikipedia, we then expand our scope to multiple languages in part III. 
@@ -57,7 +59,7 @@ How different are the past analyses if we consider different languages? Are ther
 #### **Part I**: Was COVID a hot topic during lockdown?
 - *Datasets used:* Aggregated_timeseries & Conspiracy_dataset
 
-*Goal:* Identify a methodology to extract articles related to COVID-19 misinformation. progressive zoom in the Wikipedia COVID fake news and theories landscape: Assess how relevant fake news and theories were, and more in-depth about Covid fake news, and then about the main categories of fake news.
+*Goal:* Identify a methodology to extract articles related to COVID-19 misinformation. Progressive zoom in the Wikipedia COVID fake news and theories landscape: Assess how relevant fake news and theories were, and more in-depth about Covid fake news, and then about the main categories of fake news.
 
 *Method:* 
 - *Action 1.1:* 
@@ -78,30 +80,34 @@ How different are the past analyses if we consider different languages? Are ther
 - Furthermore, the rise in attention towards COVID-related fake news is even more substantial with an  R-squared = 0.470, P-value = 0.00, and coefficient = 0.9986. This indicates that there is around a 100% increase in attention towards COVID-19 conspiracy articles.
 
   This allows us to prove that we can extract articles directly related to COVID-19 misinformation subjects and that they are identifiable through Wikipedia page views. We can also cluster them based on more general topics thanks to the titles and subtitles, which allows us to do further analysis.
-
 #### **Part II**: Wikipedia as a vigilante against misinformation
 - *Datasets used:* Covid_misinformation & News_dataset_cl
 - *Goal:* Study the overlap between COVID misinformation in Wikipedia and web-published fake news. Then we try to identify the relationship between media attention towards COVID-related fake news and Wikipedia article attention. With this, we can build a timeline of user interest towards various topics and see how restrictions in mobility affect the types of misinformation that are circulated.
 
 *Method:* 
 - *Action 1.1:*
-    - We group articles and their views along the selected main categories defined in the Wikipedia COVID-19 misinformation categories. They are: 
+    - We group articles and their views along the selected main categories defined in the Wikipedia [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) categories (based on the article's main headings). Our Fake News Topics are: 
         - Virus origin
         - Incidence and mortality
         - Disease spread
         - Prevention
         - Vaccines
         - Treatment
-        - From there, we transform the subcategories related to the main categories into a bag of words (bow) to classify the web news dataset. With this, we have a dictionary of words for each main heading.
+    - From there, we use the subtitles and sub-subtitles of each main category from the wikipedia article to build a bag of words (bow) to classify the web news dataset. With this, we have a bag of words for each main heading which represents the topics covered. (Note: recurrent words which were not representative of each category were removed -> eg. COVID-19, country names...)
 
-- *Action 1.2:* 
-    - Using the BoW created in *Action 1.2*, we classify the news articles into 6 categories if the claim (short description of the piece of news) contains the words from the BoW. NB that a piece of news can be classified into more categories.
+- *Action 1.2:*
+    - We introduce the news_dataset from [MM-COVID: A Multilingual and Multimodal Data Repository for Combating COVID-19 Disinformation](https://arxiv.org/abs/2011.04088). As we are currently studying the english version of the [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) article, we focus on the english based language Fake News. This dataset gives us access to 2168 individual pieces of media content which have been labelled as Fake.
+     - Using the BoW created in *Action 1.2*, we then classify the selected news articles into the 6 categories. A piece of news is classified as belonging to a Fake News topic if the claim (short description of the piece of news) contains words from the BoW. (note that a piece of news can be classified into more than one category)
+     - Based on this, we can see that 84% of the topics covered by the Fake news dataset are represented in the topics covered by the wikipedia article.
 
 - *Action 1.3:*
-    - We then plot the timeline of published news along with the view count of the corresponding Wikipedia articles per main category and try to infer a correlation between them.
+    - We plot a weighted average of the viewcount from   
+
+- *Action 1.4:*
+    - We then plot the timeline of published news along with the view count of the corresponding Wikipedia articles per main category and try to infer a correlation between them. 
   
 *Analysis:* 
-    - Study the intersection and the top 20 present subcategories for each main category. With this we can see wether the information in Wikipedia is representative of real fake news.
+    - Following our bow analysis, we mana
 
 
 #### **Part III**: COVID fake news around the world
