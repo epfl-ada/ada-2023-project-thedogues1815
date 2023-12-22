@@ -64,16 +64,25 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
 
 *Method:* 
 - *Action 1.1:* 
-    - We are curious about the increase of interest in Fake news as a whole on Wikipedia. For this, we compare the relative increase of pages after and during the first COVID lockdown period (march 2020 to May 2020) by analysing the evolution of interest in fake news article that can't be explained by the increase use of wikipedia by applying the difference in difference method. (e.i ....)
-    - 
-- *Action 1.2:* 
+    - We are curious about the increase in interest in Fake news as a whole on Wikipedia. To investigate this, we compare the relative increase in pages before and during the first COVID lockdown period (March 2020 to May 2020) by analyzing the evolution of interest in fake news articles. We aim to discern the increase that cannot be explained solely by the overall rise in Wikipedia usage. We employ the **difference-in-difference** method for this analysis.
+      
+      - Initially, we calculate the percentage increase in Wikipedia views compared to the baseline of 2018. Additionally, we determine the percentage increase in Wikipedia conspiracy theory views compared to 2018.
+      - Next, to isolate the increase specifically related to fake news, we subtract the increase in conspiracy theory views from the overall Wikipedia increase for each day. This provides us with the comparative increase in Wikipedia articles related to fake news.
+        
+      - Data Grouping: We segregate the data into two groups - "Before Lockdown," where we consider the comparative increase before the lockdown, and "In Lockdown," where we analyze the comparative increase during the lockdown. Subsequently, we conduct a regression analysis between the two groups to identify any significant differences.
+     
+- *Action 1.2:*
+    - Clustering the fake news into different categories and plotted them in 3 pie charts representing the variation before, during, and after lockdown. To see if attention shifted to different type of fake news during the lockdown
+        
+- *Action 1.3:* 
     - Clean the COVID_misinformation dataset as some articles have too many cofounders due to the high traffic that they drive and their relationship to many misinformation subjects at once (eg. Donald Trump, Steve Bannon...), and others cannot directly be shown to be COVID related (eg. Chinese Communist Party).
     - As such, we performed feature analysis, hand labeling articles that we deemed relevant (high spike in attention, low attention pre-spike, higher attention after post-lockdown), and those that we deemed irrelevant.
     - This allowed for an efficient selection of articles directly related to Fake news topics based on [Skewness](https://en.wikipedia.org/wiki/Skewness), Max Views, and the [Kurtosis metric](https://en.wikipedia.org/wiki/Kurtosis) (see the relevant part in the notebook for more contextual information on metrics).
       
-- *Action 1.3* 
-    - After seeing a significant increase of 50 % for fake news we went more in-depth and evaluated the relative increase in COVID-19 related fake news. To do that we use the COVID-19 misinformation dataset and applied the difference and difference method to compare the increase in COVID-19 related fake news with the increase in overall wikipedia views.
-- *Action 1.4*   
+- *Action 1.4* 
+    - After seeing a significant increase of 50 % for fake news we went more in-depth and evaluated the relative increase in COVID-19 related fake news. To do that we use the COVID-19 misinformation dataset and similarly to action 1.1 we applied the same **difference and difference method** to compare the increase in COVID-19 related fake news with the increase in overall wikipedia views.
+
+- *Action 1.5*   
     - For a more in depth look at the Fake News content, we group articles and their views along the selected main categories defined in the Wikipedia [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) categories (based on the article's main headings). Our Fake News Topics are: 
         - Virus origin
         - Incidence and mortality
@@ -85,6 +94,7 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
 
 *Analysis:* 
 - We find that there is an important rise in attention towards fake news during the lockdown. From the linear regression, between the control group (containing the views of the articles before lockdown) and the treatment group (containing the views of article during the lockdown), we obtain : R-squared =  0.692, P-value = 0.00, and a coefficient = 0.4819. This indicates that around a 50% increase in attention towards fake news that the rise in general Wikipedia usage that can't be explained by the null hypothesis.
+- We observe an increase from 2.2% to 3% during the lockdown, followed by a decrease to 1.3% in health-related fake news. There is a significant increase in regional fake news from 19% to around 40%, and a decrease in death and disappearance-related fake news (20% during the lockdown).
 
 - Furthermore, the rise in attention towards COVID-related fake news is even more substantial with an  R-squared = 0.470, P-value = 0.00, and coefficient = 0.9986. This indicates that there is around a 100% increase in attention towards COVID-19 conspiracy articles.
 
