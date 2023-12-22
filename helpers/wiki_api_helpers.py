@@ -4,9 +4,162 @@ from bs4 import BeautifulSoup
 from urllib.parse import unquote  # Import the unquote function
 from googletrans import Translator
 from urllib.parse import quote  # Import quote for URL encoding
+import ast
+from ast import literal_eval
+from pylab import  * 
 
 
-def fetch_pageview_count(language, articles, start_date = "20220101", end_date ="20230101", granularity = "daily"):
+def fetch_pageview_count_Antonio(language, articles):
+    api_url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{project}/{access}/{agent}/{article}/{granularity}/{start}/{end}"
+
+    params = {
+        "project": f"{language}.wikipedia",   # Language-specific Wikipedia project
+        "access": "all-access",
+        "agent": "user",
+        "granularity": "daily",
+        "start": "20190101",
+        "end": "20230531"
+    }
+
+    headers = {
+        "User-Agent": "WikiWackyNews"
+    }
+
+    pageviews_data = {}
+
+    for article in articles:
+        params["article"] = article
+
+        # Make the API request
+        response = requests.get(api_url.format(**params), headers=headers)
+
+        # Access the data and save it as a dataframe
+        if response.status_code == 200:
+            data = response.json()
+            item_list = data.get("items", [])
+            
+            if item_list:
+                df = pd.DataFrame(item_list).copy()
+                df['timestamp'] = pd.to_datetime(df['timestamp'], format='%Y%m%d%H')
+                pageviews_data[article] = df
+            else:
+                print(f"No data available for {article}")
+        else:
+            print(f"Error fetching data for {article}. Status Code: {response.status_code}")
+
+    return pageviews_data
+
+
+def wiki_extract_time_increase(wiki_pages_links, word_cluster_1, language, year_control ):
+    wiki_cluster_links_1 = wiki_pages_links[(wiki_pages_links["Main Heading"].str.contains(word_cluster_1))].copy()
+    
+    # Cleaning the clusters to only obtain words searcheable in wikipedia API
+    def extract_clean_text(links):
+        cleaned_links = []
+        for link in links:
+            if '/wiki/' in link:
+                extracted_text = link.split('/wiki/')[1].split('#')[0].replace('_', ' ')
+                cleaned_links.append(extracted_text)
+        return cleaned_links
+    
+    # Convert string representation of list to actual list using ast.literal_eval and apply the function
+    wiki_cluster_links_1["Cleaned_Text"] = wiki_cluster_links_1["Links"].apply(lambda x: extract_clean_text(ast.literal_eval(x)))
+    
+    # Looking for all the articles in the cluster 1 which correspond to Virus Origin 
+    
+    list_cluster_1 = list(wiki_cluster_links_1["Cleaned_Text"])
+    
+    final_count_1 =[]
+    for i in list_cluster_1:
+        results   = fetch_pageview_count_Antonio(language, i )
+        merged_df = pd.concat(results, ignore_index=True)
+        #Grouping the dataframe to sum up the views
+        merged_df = merged_df.groupby(['timestamp'])["views"].sum()
+        final_count_1.append(pd.DataFrame(merged_df))
+        
+    final_views_1= pd.concat(final_count_1, ignore_index=False) 
+    data_1 = final_views_1.groupby(['timestamp']).sum()
+    data_1['time_1'] = pd.to_datetime(data_1.index, format='%d/%m/%Y')
+    if year_control==2019:
+        start_date_i = 0   #2019
+        final_date_i = 365  #2019
+        start_date_f = 365  #2020
+        final_date_f = 365*2#2020
+    elif year_control==2022:
+        start_date_i = 365*3  #2022
+        final_date_i = 365*4  #2022
+        start_date_f = 365    #2020
+        final_date_f = 365*2  #2020
+    
+    time_1         = data_1["time_1"][start_date_i:final_date_i]
+    time_2         = data_1["time_1"][start_date_f:final_date_f]
+    base_line      = array(data_1["views"][start_date_i:final_date_i])
+    increase       = array(data_1["views"][start_date_f:final_date_f])
+    
+    return time_1 , time_2, base_line, increase
+    
+def intervention_date(intervention_data, intervention_event):
+    year  = int(intervention_data[intervention_event][0:4])
+    month = int(intervention_data[intervention_event][5:7])
+    day   = int(intervention_data[intervention_event][8:10])
+    date  = datetime.datetime(year, month, day)
+    return date
+
+def get_pageview_period(time,page_view, days, date,status):
+    # Replace this with your actual lists of dates and visits
+    dates_list  = list(time)
+    visits_list = list(log(array(page_view)))
+    
+    # Specific date to split the data
+    specific_date = date
+    
+    # Create a DataFrame from the lists
+    df = pd.DataFrame({'Date': dates_list, 'Visits': visits_list})
+    
+    # Convert 'Date' column to datetime format
+    df['Date'] = pd.to_datetime(df['Date'])
+    
+    # Find the index of the specific date
+    specific_date_index = df[df['Date'] == specific_date].index[0]
+    
+    # Select 50 days before and after the specific date
+    date_range = pd.date_range(start=specific_date - pd.Timedelta(days=days), end=specific_date + pd.Timedelta(days=days))
+    
+    # Create a new column 'Period' to label pre/post specific date
+    df['Period'] = 'Pre'  # Initialize as 'Pre'
+    df['Treated'] = status
+    df.loc[df['Date']>specific_date, 'Period'] = 'Post'  # Set 'Post' for dates within the range
+    
+    # Filter the DataFrame to include only the 50 days before and after the specific date
+    filtered_df = df[df['Date'].isin(date_range)]
+    
+    return filtered_df
+
+def get_standard_error_sum(results, covariates):
+    '''
+    #95CI is approximated with +- 2 sum_variance_standard_error
+    '''
+    # get the variance covariance matrix
+    # print(covariates)
+    vcov = results.cov_params() \
+        .loc[covariates, covariates].values
+
+    # calculate the sum of all pair wise covariances by summing up off-diagonal entries
+    off_dia_sum = np.sum(vcov)
+    # variance of a sum of variables is the square root
+    return np.sqrt(off_dia_sum)
+
+
+def clean_df_wikilinks(wiki_pages_links):
+    empty_rows = []
+    for i in  range(0,len(wiki_pages_links["Links"])):
+        if wiki_pages_links["Links"].iloc[i]=="[]":
+            empty_rows.append(i)
+    wiki_pages_links.drop(empty_rows, axis=0, inplace=True)
+    return wiki_pages_links
+
+
+def fetch_pageview_count(language, articles, start_date = "20180101", end_date ="20200630", granularity = "daily"):
     api_url = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{project}/{access}/{agent}/{article}/{granularity}/{start}/{end}"
 
     params = {
