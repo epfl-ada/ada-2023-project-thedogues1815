@@ -45,13 +45,14 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
     - *Used in part I & II*
 1. *Conspiracy_dataset:* We parsed the links on the Wikipedia [template conspiracy theory page](https://en.wikipedia.org/wiki/Template:Conspiracy_theories), which unify links to all pages related to fake news and conspiracy theories across time. It gives us a representative look at global fake news and conspiracy theory attention on Wikipedia during the lockdown. 
     - *Used in part I, II, III*
-2. *COVID_misinformation:* For fake news more oriented towards COVID, we parsed the [COVID-19 misinformation page](https://en.wikipedia.org/wiki/COVID-19_misinformation) and extracted the article links from each paragraph, and associated them with their original part title, and paragraph subtitle to later apply the bag of word method for news classification. 
+2. *COVID_misinformation:* For fake news more oriented towards COVID, we parsed the [COVID-19 misinformation page](https://en.wikipedia.org/wiki/COVID-19_misinformation) and extracted the articles referenced inside of each paragraph, and associated them with their original part title, and paragraph subtitle to later apply the bag of word method for news classification. 
     - *Used in part II*
 3. *News_dataset_cl:* This dataset is used to introduce a link between Wikipedia viewcounts and media attention on various misinformation subjects. It comes from the paper [MM-COVID: A Multilingual and Multimodal Data Repository for Combating COVID-19 Disinformation](https://arxiv.org/abs/2011.04088) which provides a multilingual fake news dataset, their claim, and the publishing dates of articles.
     - *Used in part I & II*
 4. *Mobility_2020-2022:* We used the mobility time series to extract the important mobility restriction periods. We can then use this to identify the link between the different phases of mobility restrictions and use this for the difference in differences method.
     - *Used in part III*
-5. *Multi_lang_COVID_misinformation:* We apply the function and preprocessing developed for the COVID_misinformation part and apply it to COVID misinformation pages in French, Italian, Spanish, Arab, German, Portuguese, Russian, and Chinese. We then translated all the part titles and subtitles and used the Wikipedia API to identify the English version of the articles referenced in the other language pages. This allows us to create a common ground to compare the overlap of referenced articles across languages and to study interest in COVID-19 Fake News across multiple languages.
+5. *Multi_lang_COVID_misinformation:* We apply the function developed for the COVID_misinformation dataset to parse wikipedia pages (extraction of links and the section to which they belong) and apply it to COVID misinformation pages in [French](https://fr.wikipedia.org/wiki/D%C3%A9sinformation_sur_la_pand%C3%A9mie_de_Covid-19#D%C3%A9sinformation_des_gouvernements_et_dirigeants), [Italian](https://it.wikipedia.org/wiki/Disinformazione_sul_SARS-CoV-2), Spanish, Arab, German, Portuguese, Russian, and Chinese. We then translated all the part titles and subtitles and used the Wikipedia API to identify the English version of the articles referenced in the other language pages. This allows us to create a common ground to compare the overlap of referenced articles across languages and to study interest in COVID-19 Fake News across multiple languages.
+    - The links of equivalent articles are inside of the "Full Links English" column. If no equivalent is found, the original link is still added to the "Full Links English column". This means that the column is constituted of the english wikipedia links for all articles which had an english equivalent, and of the original wikipedia links for all the articles which had no english equivalent 
 
 
 ### **Methodology & Analysis:**
@@ -67,11 +68,20 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
     - 
 - *Action 1.2:* 
     - Clean the COVID_misinformation dataset as some articles have too many cofounders due to the high traffic that they drive and their relationship to many misinformation subjects at once (eg. Donald Trump, Steve Bannon...), and others cannot directly be shown to be COVID related (eg. Chinese Communist Party).
-    - As such, we performed feature analysis, hand labeling articles that we deemed relevant (high spike in attention, low attention pre-lockdown, higher attention after lockdown), and those that we deemed irrelevant.
+    - As such, we performed feature analysis, hand labeling articles that we deemed relevant (high spike in attention, low attention pre-spike, higher attention after post-lockdown), and those that we deemed irrelevant.
     - This allowed for an efficient selection of articles directly related to Fake news topics based on [Skewness](https://en.wikipedia.org/wiki/Skewness), Max Views, and the [Kurtosis metric](https://en.wikipedia.org/wiki/Kurtosis) (see the relevant part in the notebook for more contextual information on metrics).
       
 - *Action 1.3* 
     - After seeing a significant increase of 50 % for fake news we went more in-depth and evaluated the relative increase in COVID-19 related fake news. To do that we use the COVID-19 misinformation dataset and applied the difference and difference method to compare the increase in COVID-19 related fake news with the increase in overall wikipedia views.
+- *Action 1.4*   
+    - For a more in depth look at the Fake News content, we group articles and their views along the selected main categories defined in the Wikipedia [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) categories (based on the article's main headings). Our Fake News Topics are: 
+        - Virus origin
+        - Incidence and mortality
+        - Disease spread
+        - Prevention
+        - Vaccines
+        - Treatment
+    - Based on this, we do a topic based D-in-D to see the relative increase of each topic with regards to the globla trend.
 
 *Analysis:* 
 - We find that there is an important rise in attention towards fake news during the lockdown. From the linear regression, between the control group (containing the views of the articles before lockdown) and the treatment group (containing the views of article during the lockdown), we obtain : R-squared =  0.692, P-value = 0.00, and a coefficient = 0.4819. This indicates that around a 50% increase in attention towards fake news that the rise in general Wikipedia usage that can't be explained by the null hypothesis.
@@ -86,14 +96,7 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
 
 *Method:* 
 - *Action 2.1:*
-    - We group articles and their views along the selected main categories defined in the Wikipedia [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) categories (based on the article's main headings). Our Fake News Topics are: 
-        - Virus origin
-        - Incidence and mortality
-        - Disease spread
-        - Prevention
-        - Vaccines
-        - Treatment
-    - From there, we use the subtitles and sub-subtitles of each main category from the wikipedia article to build a bag of words (bow) to classify the web news dataset. With this, we have a bag of words for each main heading which represents the topics covered. (Note: recurrent words which were not representative of each category were removed -> eg. COVID-19, country names...)
+    - From the Fake News Topics defined in *Action 1.4*, we use the subtitles and sub-subtitles of each main category from the wikipedia article to build a bag of words (bow) to classify the web news dataset. With this, we have a bag of words for each main heading which represents the topics covered. (Note: recurrent words which were not representative of each category were removed -> eg. COVID-19, country names...)
 
 - *Action 2.2:*
     - We introduce the news_dataset from [MM-COVID: A Multilingual and Multimodal Data Repository for Combating COVID-19 Disinformation](https://arxiv.org/abs/2011.04088). As we are currently studying the english version of the [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines) article, we focus on the english based language Fake News. This dataset gives us access to 2168 individual pieces of media content which have been labelled as Fake.
@@ -113,17 +116,27 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
         - *Popularity (percentage of viewcount increase):* The process is the exactly the same but we do not apply the derivative filer and proceed straight to min max normalization.
   
 *Analysis:* 
-    - Following our bow analysis, we mana
-
+    - Introducing the *News_dataset_cl* enables us to verify that the topics classified as Fake News on Wikipedia are representative of general media attention with an 85% match. We also confirm that the publication trends and viewcount trends are closely related. This means that Wikipedia is a useful tool to study general media and user interest towards COVID-19 Fake News!
+    - From there, we use the abundant wikipedia pageviews information to study the virality and popularity of each topic with regards to the norm. We observe that each topic is closely related and they move together. 
+    - It is also observed that mobility restrictions had a significant impact on our trends, with interest towards articles slowly rising after the first reported deaths, sinking dramatically after the beginning of lockdown, and then picking back up after the end of lockdowns. These observations show that Fake News mostly picked up when "regular" social contexts were in order, whereas when everyone was at home and not directly impacted by the disease, interest fell. It would perhaps be interesting to study the viewcounts of pages directly related to political instances which decided to put lockdowns in place, as the interest probably shifted in that direction, but we did not have that data from the COVID-19 misinformation plot alone. 
 
 #### **Part III**: COVID fake news around the world
 - *Datasets used:* Multi_lang_COVID_msinforamtion
-- *Goal:* Study the relationship between COVID Wikipedia pages for different languages. Since the Wikipedia pages in different languages don't have the same structure (so we cannot compare main headings), the only thing we can analyse is the links they refer to.
+- *Goal:* Study the relationship between COVID Wikipedia pages for different languages. Since the Wikipedia pages in different languages don't have the same structure (so we cannot compare main headings), we want to analyse the links they refer to. What kind of overlap is there between each languages?
 
 *Method:* 
-- *Action 1.1:* To see the similarities in Wikipedia articles across different languages, we can create a pseudo-bag of words for the titles of the Wikipedia pages about COVID-19 parsed from the Multi_lang_COVID_msinforamtion. We clean the links, separating the words and removing stopwords and words that are over present, and then we count the number of unique words, along with their number frequency to create word clouds for each language.
+- *Action 3.1:*
+    - In this section, we only consider articles which had english equivalents. 
+    - To see the similarities in Wikipedia articles across different languages, we create a pseudo-bag of words for the titles of the equivalent Wikipedia pages about COVID-19 parsed from the Multi_lang_COVID_misinformation.
+    - We clean the links, separating the words and removing stopwords and words that are over present, and then we count the number of unique words, along with their number frequency to create word clouds for each language.
   
-- *Action 1.2:* In order to quantify better the relationship between languages, we can construct a chord plot with the thickness of the chords tying two languages that is proportional to the overlap of words between the two languages. We then calculate the Jaccard similarity between pairs of languages to quantify this finding. 
+- *Action 3.2:*
+    - In order to quantify better the relationship between languages, we can construct chord plots with the thickness of the chords tying two languages that is proportional to a given overlap metric. We propose two possibilities to study the overlap between these languages.
+        - The first is through the count of shared articles between languages.
+        - The second is through an evaluation of the Jaccard similarity of bows built for each language out of the titles of articles which were found to have an english equivalent.
+    - We also investigate the articles which had no english equivalent by calculating what proportion of articles they represented out of all referenced articles.
+
+*Analysis:*
 
 
 
