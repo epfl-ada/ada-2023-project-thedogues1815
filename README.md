@@ -68,13 +68,10 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
     - We perform feature analysis on the *Covid_misinformation* dataset to remove irrelevant articles with heavy cofounders (eg. Donald Trump ect) or no close relationship to the topic.
 
 - *Action 1.1:* 
-    - We are curious about the increase in interest in Fake news as a whole on Wikipedia. To investigate this, we compare the relative increase of pageviews in pages before and during the first COVID lockdown period (March 2020 to May 2020). We evaluate the statistical significance of this increase using the **Difference-in-Difference** method
-     
+    - We are curious about the increase in interest in Fake news as a whole on Wikipedia. To investigate this, we compare the relative increase of pageviews in pages before and during the first COVID lockdown period (March 2020 to May 2020). We evaluate the statistical significance of this increase using the **Difference-in-Difference** method   
 - *Action 1.2:*
     - We plot **pie charts** to visualize the evolution of the most popular Fake News article types before, during and after the COVID lockdown
-
 - *Action 1.3:* A similar analysis to 1.1 was conducted to show that the group of articles from the *COVID-misinformation* dataset also had a statistically significant increase.
-
 - *Action 1.4*   
     - For a deeper, topical look at the COVID-19 related misinformation, we group the retained articles from the preprocessing and their views along the selected main categories defined in the Wikipedia [COVID-19 misinformation](https://en.wikipedia.org/wiki/COVID-19_misinformation#Vaccines). Our Fake News Topics now are: 
         - Virus origin
@@ -92,10 +89,8 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
 *Method:* 
 - *Action 2.1:*
     - We classify the news articles from the *News_dataset_cl* into the 6 categories defined in *Action 1.4*. For this we use bags of words built using the various headings and paragraph titles found in the COVID-19 misinformation page. (Note that a piece of news can be classified into more than one category). 
-
 - *Action 2.3:*
     - We plot the evolution of the aggregated pageviews from the various articles parsed from the COVID-19 misinformation set **vs** daily fake news publications from the News_dataset_cl. We then evaluate the [Spearman's Rank Correlation Coefficiant](https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient) to evaluate the correlation between both curves (pre maximum and post maximum).
-
 - *Action 2.4:*
     - Having prooved that the viewcount of the COVID-19 misinformation dataset is a good topical and behavioural match to "naturally occuring" Fake News publications related to COVID-19, we try to establish a storyline of Fake news interest during the different phases of the pandemic between January and July 2020. (wikipedia )
     - We study the speed of viewcount increase (that we call *Virality*) and the percentage of viewcount increase (which we call *Popularity*) for each article, both with regards to the global wikipedia norm. 
@@ -109,13 +104,10 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
 - *Action 3.1:*
     - We build word clouds for each of the considered COVID-19 misinformation languages. They are built using the titles of the referenced articles. We can then see what topics each language mostly focused on.
     - Note 
-
 - *Action 3.2:*
     - Comparative histogram between languages to show the constitution of links that they point towards. What percentage is common with other languages, what percentage only exists in the original language, what percentage exists in english
-  
 - *Action 3.3:*
     - In order to quantify better the relationship between languages, we look at the Jaccard similarity of BOWs built for each language out of the titles of parsed articles which were found to have an english equivalent.
-
 - *Action 3.4:*
     - We construct a chord plot with the thickness of the chords tying two languages proportional to the count of shared articles between languages.
 
