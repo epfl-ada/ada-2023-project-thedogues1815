@@ -1,5 +1,5 @@
 # Thedogues1815 project folder -> [Our datastory](https://bottinel.github.io/TheDoguesDataStory/)
-
+## Please consider this repo for our submission
 ## # Wiki's Wacky Covid Factory
 The goal of this project is to showcase the link between Wikipedia and the spread of Fake news, conspiracy theories, and general misinformation on COVID-19, and to study their contents in different languages. 
 
