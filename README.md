@@ -58,7 +58,8 @@ We want to evaluate the usefulness of Wikipedia as a tool for studying misinform
 #### Nota Bene.
 Many technical details (like curve smoothing, correlation calculation...) are glossed over here. You are welcome to go view our notebooks to understand more about  our work!
 
-#### **Part I**: Was COVID a hot topic during lockdown?
+#### **Part I**: How Hot Were Dem Fake News?
+
 - *Datasets used:* Aggregated_timeseries & Conspiracy_dataset & Covid_misinformation
 
 *Goal:* Identify a methodology to extract articles related to COVID-19 misinformation. Progressive zoom in the Wikipedia COVID fake news and theories landscape: Assess how relevant fake news and theories were, and more in-depth about Covid related Fake News.
@@ -81,7 +82,7 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
         - Treatment
     - Based on this, we do a topic based D-in-D to see the relative increase of each topic with regards to the global trend.
   
-#### **Part II**: Wikipedia as a vigilante against misinformation
+#### **Part II**: Wiki, Wiki, Wiki, Are You Actually Useful?
 - *Datasets used:* Covid_misinformation & News_dataset_cl
 - *Goal:* Study the overlap between COVID misinformation in Wikipedia and web-published fake news. Then try to identify the relationship between media attention towards COVID-related fake news and Wikipedia article attention. With this, we build a timeline of user interest towards various topics and see how restrictions in mobility affect the types of misinformation that are circulated.
 
@@ -95,7 +96,7 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
     - We study the speed of viewcount increase (that we call *Virality*) and the percentage of viewcount increase (which we call *Popularity*) for each article, both with regards to the global wikipedia norm. 
     - We also consider their relationship with mobility changepoints
 
-#### **Part III**: Multilingual analysis of COVID-19 misinformation
+#### **Part III**: Fake News World Tour
 - *Datasets used:* Multi_lang_COVID_misinformation
 - *Goal:* Study the relationship between COVID Wikipedia pages for different languages. Since the Wikipedia pages in different languages don't have the same structure (so we cannot compare main headings), we want to analyse the links they refer to. What kind of overlap is there between each language?
 
@@ -104,17 +105,17 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
     - We build word clouds for each of the considered COVID-19 misinformation languages. They are built using the titles of the referenced articles. We can then see what topics each language mostly focused on.
     - Note 
 - *Action 3.2:*
-    - Comparative histogram between languages to show the constitution of links that they point towards. What percentage is common with other languages, what percentage only exists in the original language, what percentage exists in english
+    - Comparative histogram between languages to show the constitution of links that they point towards. What percentage is common with other languages, what percentage only exists in the original language, what percentage exists in English
 - *Action 3.3:*
-    - In order to quantify better the relationship between languages, we look at the Jaccard similarity of BOWs built for each language out of the titles of parsed articles which were found to have an english equivalent.
+    - In order to quantify better the relationship between languages, we look at the Jaccard similarity of BOWs built for each language out of the titles of parsed articles which were found to have an English equivalent.
 - *Action 3.4:*
     - We construct a chord plot with the thickness of the chords tying two languages proportional to the count of shared articles between languages.
 
 ### Work sharing
-- Tecla - Website + Part II & III -> Bag of words methods
-- Pablo - Part I & II -> Feature analysis
+- Tecla - Website + Part II & III + DataStory -> Bag of words methods, final revision
+- Pablo - Part I & II -> Feature analysis, final revision
 - Antonio - Part I & II -> DinD, correlation
-- William - Part I + Data Story -> 
-- Victor - Part III + Data Story -> Dataset construction, wiki API
+- William - Part I + Data Story -> Global fake news analysis
+- Victor - Part III + Data Story -> Dataset construction, wiki API, final revision
 
 
