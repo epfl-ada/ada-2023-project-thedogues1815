@@ -111,10 +111,10 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
     - We construct a chord plot with the thickness of the chords tying two languages proportional to the count of shared articles between languages.
 
 ### Work sharing
-Tecla - Website + Part II & III -> Bag of words methods
-Pablo - Part I & II -> Feature analysis
-Antonio - Part I & II -> DinD, correlation
-William - Part I + Data Story -> 
-Victor - Part III + Data Story -> Dataset construction, wiki API
+- Tecla - Website + Part II & III -> Bag of words methods
+- Pablo - Part I & II -> Feature analysis
+- Antonio - Part I & II -> DinD, correlation
+- William - Part I + Data Story -> 
+- Victor - Part III + Data Story -> Dataset construction, wiki API
 
 
