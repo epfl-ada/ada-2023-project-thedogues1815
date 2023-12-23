@@ -96,7 +96,7 @@ Many technical details (like curve smoothing, correlation calculation...) are gl
     - We study the speed of viewcount increase (that we call *Virality*) and the percentage of viewcount increase (which we call *Popularity*) for each article, both with regards to the global wikipedia norm. 
     - We also consider their relationship with mobility changepoints
 
-#### **Part III**: Fake News World Tour
+#### **Part III**: Covid Fake News World Tour
 - *Datasets used:* Multi_lang_COVID_misinformation
 - *Goal:* Study the relationship between COVID Wikipedia pages for different languages. Since the Wikipedia pages in different languages don't have the same structure (so we cannot compare main headings), we want to analyse the links they refer to. What kind of overlap is there between each language?
 
